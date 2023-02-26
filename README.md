@@ -1,2 +1,2 @@
 # DataForge
-A no-code ML platform with incentivization 
+A No-code Machine Learning Platform
