@@ -84,15 +84,15 @@
         </header>
         <main class="px-3">
             <h3>Create your project</h3>
-            <form class="row g-2">
+            <form class="row g-2" action="/create" method="POST" enctype="multipart/form-data">
                 <div class="mb-1 col-md-12 text-start">
                     <label class="form-label">Upload the data</label>
-                    <input class="form-control form-control-lg" type="file" id="formFile" required>
+                    <input class="form-control form-control-lg" type="file" id="formFile" name="file" required>
                 </div>
                 <div class="row g-2 mb-2">
                     <div class="col-md-6 px-1">
                         <div class="form-floating">
-                            <input type="text" class="form-control" id="floatingInputGrid" placeholder="75%" value="75" required>
+                            <input type="text" class="form-control" id="floatingInputGrid" placeholder="75%" value="75" name="splitratio" required>
                             <label for="floatingInputGrid" class="text-black">Split ratio</label>
                         </div>
                     </div>

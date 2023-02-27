@@ -1,5 +1,6 @@
-# Basic flask app to return hello world
-from flask import Flask, render_template
+from flask import Flask, render_template, request, redirect
+from utils.removeNull import removeNull
+from utils.edaReport import edaReport
 
 app = Flask(__name__)
 
@@ -10,6 +11,15 @@ def hello_world():
 @app.route('/project')
 def project():
     return render_template('project.html')
+
+@app.route('/create', methods=['GET', 'POST'])
+def create():
+    if request.method == 'POST':
+        file = request.files['file']
+        df = removeNull(file)
+        edaReport(df)
+        return render_template('report.html')
+    return redirect('/project')
 
 if __name__ == '__main__':
     app.run(debug=True)
