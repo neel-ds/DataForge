@@ -1,7 +1,6 @@
 from flask import Flask, render_template, request, redirect
 from utils.removeNull import removeNull
-from utils.edaReport import edaReport
-from utils.filterHTML import filterHTML
+from utils.generateEDA import filterHTML
 
 app = Flask(__name__)
 
