@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect
 from utils.removeNull import removeNull
 from utils.edaReport import edaReport
+from utils.filterHTML import filterHTML
 
 app = Flask(__name__)
 
@@ -17,7 +18,7 @@ def create():
     if request.method == 'POST':
         file = request.files['file']
         df = removeNull(file)
-        edaReport(df)
+        filterHTML(df)
         return render_template('report.html')
     return redirect('/project')
 
