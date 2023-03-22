@@ -84,12 +84,18 @@
         </header>
         <main class="px-3">
             <h3>Create your project</h3>
-            <form class="row g-2" action="/create" method="POST" enctype="multipart/form-data">
+            <form class="row g-2" action="/train" method="POST" enctype="multipart/form-data">
                 <div class="mb-1 col-md-12 text-start">
                     <label class="form-label">Upload the data</label>
                     <input class="form-control form-control-lg" type="file" id="formFile" name="file" required>
                 </div>
                 <div class="row g-2 mb-2">
+                    <div class="col-md-6 px-1">
+                        <div class="form-floating">
+                            <input type="text" class="form-control" id="floatingInputGrid" placeholder="75%" name="target" required>
+                            <label for="floatingInputGrid" class="text-black">Target Attribute</label>
+                        </div>
+                    </div>
                     <div class="col-md-6 px-1">
                         <div class="form-floating">
                             <input type="text" class="form-control" id="floatingInputGrid" placeholder="75%" value="75" name="splitratio" required>
@@ -98,10 +104,10 @@
                     </div>
                     <div class="col-md">
                         <div class="form-floating">
-                            <select class="form-select" id="floatingSelect" aria-label="Problem type" required>
+                            <select class="form-select" id="floatingSelect" aria-label="Problem type" name="problem" required>
                                 <option selected>Select</option>
-                                <option value="1">Regression</option>
-                                <option value="2">Classification</option>
+                                <option value="Regression">Regression</option>
+                                <option value="Classification">Classification</option>
                             </select>
                             <label for="floatingSelect" class="text-black">Choose your problem type</label>
                         </div>
