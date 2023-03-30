@@ -14,6 +14,10 @@ def hello_world():
 def project():
     return render_template('project.html')
 
+@app.route('/deploy')
+def deploy():
+    return render_template('deploy.html')
+
 @app.route('/create', methods=['GET', 'POST'])
 def create():
     if request.method == 'POST':
