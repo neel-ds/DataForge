@@ -3,6 +3,7 @@ from utils.removeNull import removeNull
 from utils.generateEDA import filterHTML
 from utils.trainModel import *
 import numpy as np
+import pickle
 
 app = Flask(__name__)
 
@@ -36,14 +37,20 @@ def train():
         splitratio = request.form['splitratio']
         problem = request.form.getlist('problem')
         df = removeNull(file)
-        X_train, X_test, y_train, y_test = splitData(df, target, splitratio)
-        print(X_train.columns)
-        model = trainModel(X_train, X_test, y_train, y_test, problem[0], target)
-        model.fit(X_train, y_train)
-        print(model.score(X_test, y_test))
-        print(model.predict(np.array([1,1,0,150,276,0,0,112,1,0.6,1,1,1]).reshape(1, -1)))
+        train, test = splitData(df, target, splitratio)        
+        model = trainModel(train, problem[0], target)
+        model.fit(train.drop(target, axis=1), train[target])
+        print(model.score(test.drop(target, axis=1), test[target]))
+        # save model into pickle file 
+        pickle.dump(model, open('model.pkl', 'wb'))
         return render_template('project.html')
     return redirect('/project')
+
+@app.route('/predict')
+def deploy():
+    # load model 
+    model = pickle.load(open('model.pkl', 'rb'))
+    return 
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -121,9 +121,10 @@
                             Show Analytics
                         </label>
                     </div>
-                    <button type="submit" class="btn btn-primary">Brew</button>
+                    <button type="submit" class="btn btn-primary">Train</button>
                 </div>
             </form>
+            <button id="deploy-btn" class="btn btn-primary">Deploy</button>
         </main>
 
         <footer class="mt-auto text-white-50">
@@ -131,5 +132,13 @@
         </footer>
     </div>
 </body>
+
+<script>
+    // Write onclick for deploy button to redirect to deploy page
+    let deploy = document.getElementById("deploy-btn");
+    deploy.onclick = function() {
+        window.location.href = "/deploy";
+    }
+</script>
 
 </html>
