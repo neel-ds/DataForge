@@ -1,5 +1,5 @@
-from flask import Flask, render_template, request, redirect
-from utils.removeNull import removeNull
+from flask import Flask, render_template, request, redirect, jsonify
+from utils.preProcess import preProcess
 from utils.generateEDA import filterHTML
 from utils.trainModel import *
 import numpy as np
@@ -14,10 +14,6 @@ def hello_world():
 @app.route('/project')
 def project():
     return render_template('project.html')
-
-@app.route('/deploy')
-def deploy():
-    return render_template('deploy.html')
 
 @app.route('/create', methods=['GET', 'POST'])
 def create():
@@ -36,21 +32,34 @@ def train():
         target = request.form['target']
         splitratio = request.form['splitratio']
         problem = request.form.getlist('problem')
-        df = removeNull(file)
-        train, test = splitData(df, target, splitratio)        
-        model = trainModel(train, problem[0], target)
-        model.fit(train.drop(target, axis=1), train[target])
-        print(model.score(test.drop(target, axis=1), test[target]))
-        # save model into pickle file 
-        pickle.dump(model, open('model.pkl', 'wb'))
+        df = pd.read_csv(file)
+        df = preProcess(df)
+        print(df.columns)
+        # train, test = splitData(df, target, splitratio)        
+        # model = trainModel(train, problem[0], target)
+        # model.fit(train.drop(target, axis=1), train[target])
+        # print(model.score(test.drop(target, axis=1), test[target]))
+        # # save model into pickle file 
+        # pickle.dump(model, open('model.pkl', 'wb'))
         return render_template('project.html')
     return redirect('/project')
 
-@app.route('/predict')
-def deploy():
-    # load model 
-    model = pickle.load(open('model.pkl', 'rb'))
-    return 
+@app.route('/deploy', methods=['POST'])
+def deploy(): 
+    if request.method == 'POST':
+        # load model from pickle file
+        model = pickle.load(open('model.pkl', 'rb'))
+        
+        # Get the data from the POST request.
+        data = request.get_json(force=True)
+
+        # Convert data into 2d np array
+        data = np.array(data['params']).reshape(1, -1)
+
+        # Make prediction using model loaded from disk as per the data.
+        prediction = model.predict(data)
+
+        return jsonify({'Output': str(prediction[0])})
 
 if __name__ == '__main__':
     app.run(debug=True)
