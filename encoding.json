@@ -1,1 +1,1 @@
-{"mainroad": {"yes": 1, "no": 2}, "guestroom": {"no": 1, "yes": 2}, "basement": {"no": 1, "yes": 2}, "hotwaterheating": {"no": 1, "yes": 2}, "airconditioning": {"yes": 1, "no": 2}, "prefarea": {"yes": 1, "no": 2}, "furnishingstatus": {"furnished": 1, "semi-furnished": 2, "unfurnished": 3}, "dropped_columns": []}
+{"dropped_columns": []}

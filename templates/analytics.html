@@ -11,6 +11,7 @@
     <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/cover/">
     <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+
     <style>
         .bd-placeholder-img {
             font-size: 1.125rem;
@@ -75,40 +76,22 @@
                 <nav class="nav nav-masthead justify-content-center float-md-end">
                     <a class="nav-link fw-bold py-1 px-0" href="/">Home</a>
                     <a class="nav-link fw-bold py-1 px-0" href="/project">Projects</a>
-                    <a class="nav-link fw-bold py-1 px-0 active" aria-current="page" href="/deploy">Deploy</a>
+                    <a class="nav-link fw-bold py-1 px-0 active" aria-current="page" href="/report">Report</a>
+                    <a class="nav-link fw-bold py-1 px-0" href="/check">Test</a>
                 </nav>
             </div>
         </header>
         <main class="px-3">
-            <h3>Deploy</h3>
-            <br>
-            <form action="/test" method="POST" enctype="multipart/form-data">
-                <div id="query-params">
-                    <div class="row g-2 mb-2 query-param">
-                        <div class="col-md-6 px-1">
-                            <div class="form-floating">
-                                <input type="text" class="form-control param-label"
-                                    name="param-label-1" required>
-                                <label for="floatingInputGrid" class="text-black">Query parameter</label>
-                            </div>
-                        </div>
-                        <div class="col-md-5 px-1">
-                            <div class="form-floating">
-                                <input type="text" class="form-control param-value"
-                                    name="param-value-1" required>
-                                <label for="floatingInputGrid" class="text-black">Param Value</label>
-                            </div>
-                        </div>
-                        <div class="col-md-1 d-flex justify-content-center align-items-center">
-                            <button type="button" class="btn btn-danger" onclick="removeQueryParam(this)">x</button>
-                        </div>
-                    </div>
+            <h3>Create a report</h3>
+            <form class="row g-2" action="/create" method="POST" enctype="multipart/form-data">
+                <div class="mb-1 col-md-12 text-start">
+                    <label class="form-label">Upload the data</label>
+                    <input class="form-control form-control-lg" type="file" id="formFile" name="file" required>
                 </div>
-                <br>
-                <button type="button" class="btn btn-primary" onclick="addQueryParam()">Add Parameter</button>
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary">Create</button>
+                </div>
             </form>
-
         </main>
 
         <footer class="mt-auto text-white-50">
@@ -116,6 +99,5 @@
         </footer>
     </div>
 </body>
-<script src="../static/js/script.js"></script>
 
 </html>
