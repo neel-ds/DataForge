@@ -113,18 +113,22 @@
                             <label for="floatingSelect" class="text-black">Choose your problem type</label>
                         </div>
                     </div>
+                    <div class="col-md">
+                        <div class="form-floating">
+                            <select class="form-select" id="floatingSelect" aria-label="Do you want to see analytics" name="analytics"
+                                required>
+                                <option selected>Select</option>
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
+                            <label for="floatingSelect" class="text-black">Choose your problem type</label>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-12">
-                    <div class="form-check text-start mb-3">
-                        <input class="form-check-input" type="checkbox" id="gridCheck">
-                        <label class="form-check-label" for="gridCheck">
-                            Show Analytics
-                        </label>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Train</button>
-                </div>
+                <button type="submit" class="btn btn-primary">Train</button>
+            </div>
             </form>
-            <button id="deploy-btn" class="btn btn-primary">Deploy</button>
         </main>
 
         <footer class="mt-auto text-white-50">
@@ -132,13 +136,4 @@
         </footer>
     </div>
 </body>
-
-<script>
-    // Write onclick for deploy button to redirect to deploy page
-    let deploy = document.getElementById("deploy-btn");
-    deploy.onclick = function() {
-        window.location.href = "/test";
-    }
-</script>
-
 </html>

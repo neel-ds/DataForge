@@ -21,7 +21,7 @@ def project():
 def create():
     if request.method == 'POST':
         file = request.files['file']
-        df = removeNull(file)
+        df = pd.read_csv(file)
         filterHTML(df)
         return render_template('report.html')
     return redirect('/project')
@@ -103,8 +103,6 @@ def test():
         response = req.post(url, data=json_data, headers=headers)
 
         print(response.text)
-
-        return render_template('deploy.html', params=params)
 
     return render_template('deploy.html')
 
