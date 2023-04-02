@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, jsonify
+from flask import Flask, render_template_string, render_template, request, redirect, jsonify
 from utils.preProcess import preProcess
 from utils.generateEDA import filterHTML
 from utils.trainModel import *
@@ -6,6 +6,8 @@ import numpy as np
 import pickle
 import json
 import requests as req
+from pandas_profiling import ProfileReport
+from utils.analytics import show
 
 app = Flask(__name__)
 
@@ -17,13 +19,22 @@ def hello_world():
 def project():
     return render_template('project.html')
 
+@app.route('/report')
+def report():
+    return render_template('analytics.html')
+
+@app.route('/check')
+def check():
+    return render_template('test.html')
+
 @app.route('/create', methods=['GET', 'POST'])
 def create():
     if request.method == 'POST':
         file = request.files['file']
         df = pd.read_csv(file)
-        filterHTML(df)
-        return render_template('report.html')
+        print(df)
+        dispatch_async(dispatch_get_main_queue(), lambda: show(df))
+        return render_template("report.html")
     return redirect('/project')
 
 #Endpoint to create a ml model using pycaret
@@ -104,7 +115,7 @@ def test():
 
         print(response.text)
 
-    return render_template('deploy.html')
+    return render_template('test.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
