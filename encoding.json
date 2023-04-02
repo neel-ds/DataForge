@@ -1,0 +1,15 @@
+{
+  "Type": { "h": 1, "u": 2, "t": 3 },
+  "Method": { "S": 1, "SP": 2, "VB": 3, "PI": 4, "SA": 5 },
+  "Regionname": {
+    "Northern Metropolitan": 1,
+    "Western Metropolitan": 2,
+    "Southern Metropolitan": 3,
+    "Eastern Metropolitan": 4,
+    "South-Eastern Metropolitan": 5,
+    "Northern Victoria": 6,
+    "Eastern Victoria": 7,
+    "Western Victoria": 8
+  },
+  "dropped_columns": ["Suburb", "Address", "SellerG", "Date", "CouncilArea"]
+}

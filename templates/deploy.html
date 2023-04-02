@@ -82,9 +82,16 @@
         <main class="px-3">
             <h3>Deploy</h3>
             <br>
-            <form>
+            <form action="/test" method="POST" enctype="multipart/form-data">
                 <div id="query-params">
                     <div class="row g-2 mb-2 query-param">
+                        <div class="col-md-6 px-1">
+                            <div class="form-floating">
+                                <input type="text" class="form-control param-label"
+                                    name="param-label-1" required>
+                                <label for="floatingInputGrid" class="text-black">Query parameter</label>
+                            </div>
+                        </div>
                         <div class="col-md-5 px-1">
                             <div class="form-floating">
                                 <input type="text" class="form-control param-value"
@@ -100,7 +107,6 @@
                 <br>
                 <button type="button" class="btn btn-primary" onclick="addQueryParam()">Add Parameter</button>
                 <button type="submit" class="btn btn-primary">Submit</button>
-                {{ prediction }}
             </form>
 
         </main>
@@ -111,4 +117,5 @@
     </div>
 </body>
 <script src="../static/js/script.js"></script>
+
 </html>
