@@ -86,27 +86,20 @@
             <form action="/test" method="POST" enctype="multipart/form-data">
                 <div id="query-params">
                     <div class="row g-2 mb-2 query-param">
-                        <div class="col-md-6 px-1">
+                        <div class="col-md-12 px-1">
                             <div class="form-floating">
-                                <input type="text" class="form-control param-label"
-                                    name="param-label-1" required>
-                                <label for="floatingInputGrid" class="text-black">Query parameter</label>
+                                <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2"
+                                    style="height: 100px" name="json"></textarea>
+                                <label for="floatingTextarea2" class="text-black">Enter JSON</label>
                             </div>
                         </div>
-                        <div class="col-md-5 px-1">
-                            <div class="form-floating">
-                                <input type="text" class="form-control param-value"
-                                    name="param-value-1" required>
-                                <label for="floatingInputGrid" class="text-black">Param Value</label>
-                            </div>
-                        </div>
-                        <div class="col-md-1 d-flex justify-content-center align-items-center">
-                            <button type="button" class="btn btn-danger" onclick="removeQueryParam(this)">x</button>
+                        <div class="col-md-1 px-1">
+                            <div id="target">{{ output }}</div>
+                            <label for="output" class="text-white">Output:</label>
                         </div>
                     </div>
                 </div>
-                <br>
-                <button type="button" class="btn btn-primary" onclick="addQueryParam()">Add Parameter</button>
+                <br><br>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
 
@@ -117,6 +110,6 @@
         </footer>
     </div>
 </body>
-<script src="../static/js/script.js"></script>
+<!-- <script src="../static/js/script.js"></script> -->
 
 </html>

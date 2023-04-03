@@ -7,7 +7,8 @@ import pickle
 import json
 import requests as req
 from pandas_profiling import ProfileReport
-from utils.analytics import show
+# from utils.analytics import show
+from utils.test import test
 
 app = Flask(__name__)
 
@@ -23,6 +24,10 @@ def project():
 def report():
     return render_template('analytics.html')
 
+@app.route('/edaReport')
+def edareport():
+    return render_template('report.html')
+
 @app.route('/check')
 def check():
     return render_template('test.html')
@@ -33,7 +38,7 @@ def create():
         file = request.files['file']
         df = pd.read_csv(file)
         print(df)
-        dispatch_async(dispatch_get_main_queue(), lambda: show(df))
+        # dispatch_async(dispatch_get_main_queue(), lambda: show(df))
         return render_template("report.html")
     return redirect('/project')
 
@@ -92,28 +97,17 @@ def deploy():
 @app.route('/test', methods=['GET', 'POST'])
 def test():
     if request.method == 'POST':
-        params = {}
-        labels = []
-        values = []
-        for key in request.form.keys():
-            if key.startswith('param-label-'):
-                label = request.form[key]
-                labels.append(label)
-            elif key.startswith('param-value-'):
-                value = request.form[key]
-                values.append(value)
-        for i in range(len(labels)):
-            params[labels[i]] = values[i]
+        data = request.form['json']
+        json_data = json.dumps(data)
+        test(data)
+        # headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
 
-        json_data = json.dumps(params)
+        # url = 'http://127.0.0.1:5000/deploy'
 
-        headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
+        # response = req.post(url, data=json_data, headers=headers)
 
-        url = 'http://127.0.0.1:5000/deploy'
-
-        response = req.post(url, data=json_data, headers=headers)
-
-        print(response.text)
+        # print(response.text)
+        # return render_template('test.html', output=response.text)
 
     return render_template('test.html')
 
