@@ -1,4 +1,4 @@
-from flask import Flask, render_template_string, render_template, request, redirect, jsonify
+from flask import Flask, render_template, request, redirect, jsonify
 from utils.preProcess import preProcess
 from utils.generateEDA import filterHTML
 from utils.trainModel import *
@@ -7,42 +7,48 @@ import pickle
 import json
 import requests as req
 from pandas_profiling import ProfileReport
-# from utils.analytics import show
 from utils.test import test
 
 app = Flask(__name__)
+
 
 @app.route('/')
 def hello_world():
     return render_template('index.html')
 
+
 @app.route('/project')
 def project():
     return render_template('project.html')
+
 
 @app.route('/report')
 def report():
     return render_template('analytics.html')
 
+
 @app.route('/edaReport')
 def edareport():
     return render_template('report.html')
 
+
 @app.route('/check')
 def check():
     return render_template('test.html')
+
 
 @app.route('/create', methods=['GET', 'POST'])
 def create():
     if request.method == 'POST':
         file = request.files['file']
         df = pd.read_csv(file)
-        print(df)
-        # dispatch_async(dispatch_get_main_queue(), lambda: show(df))
+        filterHTML(df)
         return render_template("report.html")
     return redirect('/project')
 
-#Endpoint to create a ml model using pycaret
+# Endpoint to create a ml model using pycaret
+
+
 @app.route('/train', methods=['GET', 'POST'])
 def train():
     if request.method == 'POST':
@@ -53,21 +59,22 @@ def train():
         df = pd.read_csv(file)
         df = preProcess(df)
         print(df.columns)
-        train, test = splitData(df, target, splitratio)        
+        train, test = splitData(df, target, splitratio)
         model = trainModel(train, problem[0], target)
         model.fit(train.drop(target, axis=1), train[target])
         print(model.score(test.drop(target, axis=1), test[target]))
-        # save model into pickle file 
+        # save model into pickle file
         pickle.dump(model, open('model.pkl', 'wb'))
         return render_template('project.html')
     return redirect('/project')
 
+
 @app.route('/deploy', methods=['POST'])
-def deploy(): 
+def deploy():
     if request.method == 'POST':
         # load model from pickle file
         model = pickle.load(open('model.pkl', 'rb'))
-        
+
         # Get the data from the POST request.
         data = request.get_json(force=True)
 
@@ -78,7 +85,6 @@ def deploy():
         with open('encoding.json', 'r') as f:
             le_data = json.load(f)
 
-        
         # Drop columns which were dropped during training
         df = df.drop(le_data['dropped_columns'], axis=1)
 
@@ -94,22 +100,6 @@ def deploy():
 
         return jsonify({'Output': str(prediction[0])})
 
-@app.route('/test', methods=['GET', 'POST'])
-def test():
-    if request.method == 'POST':
-        data = request.form['json']
-        json_data = json.dumps(data)
-        test(data)
-        # headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
-
-        # url = 'http://127.0.0.1:5000/deploy'
-
-        # response = req.post(url, data=json_data, headers=headers)
-
-        # print(response.text)
-        # return render_template('test.html', output=response.text)
-
-    return render_template('test.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
